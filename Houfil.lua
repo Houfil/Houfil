@@ -1,14 +1,30 @@
-local HttpGet = game.HttpGet
-local GameId: number = game.GameId
+local PlaceId = game.PlaceId
+local StarterGui = game:GetService("StarterGui")
 
-local Games: {[number]: string} = loadstring(
-  HttpGet(game, "https://raw.githubusercontent.com/TonPseudo/Houfil-Hub/main/GameList.lua")
-)() :: any
+local GameList = {
+    [10090256806] = "https://raw.githubusercontent.com/Houfil/Houfil/refs/heads/main/Script/ttk.lua"
+}
 
-local URL: string? = Games[GameId]
-if not URL then 
-    warn("❌ Houfil Hub: Ce jeu n'est pas encore supporté ! (GameId: " .. tostring(GameId) .. ")")
-    return 
+local ScriptURL = GameList[PlaceId]
+
+if ScriptURL then
+    print("[HOUFIL] Supported game detected (ID: " .. tostring(PlaceId) .. "). Loading script...")
+    
+    local success, err = pcall(function()
+        loadstring(game:HttpGet(ScriptURL))()
+    end)
+    
+    if not success then
+        warn("[HOUFIL] Failed to load script: " .. tostring(err))
+    end
+else
+    warn("[HOUFIL] Unsupported game! (ID: " .. tostring(PlaceId) .. ")")
+    
+    pcall(function()
+        StarterGui:SetCore("SendNotification", {
+            Title = "Houfil",
+            Text = "This game (ID: " .. tostring(PlaceId) .. ") is not supported by Houfil.",
+            Duration = 5
+        })
+    end)
 end
-
-loadstring(HttpGet(game, URL))()
