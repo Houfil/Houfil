@@ -11,6 +11,7 @@ if ScriptURL then
     print("[HOUFIL] Supported game detected (ID: " .. tostring(PlaceId) .. "). Loading script...")
     
     local success, err = pcall(function()
+        getgenv().HoufilLoaderActive = true
         loadstring(game:HttpGet(ScriptURL))()
     end)
     
