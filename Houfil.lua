@@ -2,7 +2,7 @@ local PlaceId = game.PlaceId
 local StarterGui = game:GetService("StarterGui")
 
 local GameList = {
-    [10090256806] = "https://raw.githubusercontent.com/Houfil/Houfil/refs/heads/main/Script/ttk.lua"
+    [10090256806] = "https://houfil.fr/api/script?game=10090256806"
 }
 
 local ScriptURL = GameList[PlaceId]
